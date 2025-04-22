@@ -22,7 +22,7 @@ export function UserTable() {
 
 	return (
 		<div className="UserTable">
-			<h1>Users</h1>
+			<h2>Users</h2>
 			<Table>
 				<TableHeader>
 					<TableRow>
@@ -34,20 +34,25 @@ export function UserTable() {
 				</TableHeader>
 				<TableBody>
 					{users.map((user: User) => (
-						<TableRow key={user.id}>
+						<TableRow
+							key={user.id}
+							className="h-14"
+						>
 							<TableCell>{user.id}</TableCell>
 							<TableCell>{user.firstName}</TableCell>
 							<TableCell>{user.lastName}</TableCell>
 							<TableCell>
-								<Button
-									onClick={() => {
-										fetch("http://localhost:8081/api/user/" + user.id, {
-											method: "DELETE",
-										});
-									}}
-								>
-									Delete
-								</Button>
+								{user.id !== 1 && (
+									<Button
+										onClick={() => {
+											fetch("http://localhost:8081/api/user/" + user.id, {
+												method: "DELETE",
+											});
+										}}
+									>
+										Delete
+									</Button>
+								)}
 							</TableCell>
 						</TableRow>
 					))}

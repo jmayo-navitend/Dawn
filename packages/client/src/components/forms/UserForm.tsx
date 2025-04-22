@@ -1,4 +1,5 @@
 // React
+import React from "react";
 import { useForm } from "react-hook-form";
 
 // Packages
@@ -39,12 +40,37 @@ export function UserForm() {
 		})
 			.then((response) => response.json())
 			.then((data) => console.log("User created:", data))
-			.catch((error) => console.error("Error creating user:", error));
+			.catch((error) => console.error("Error creating user:", error))
+			.then(() => {
+				form.reset();
+			});
 	}
+
+	React.useEffect(() => {
+		const savedForm = localStorage.getItem("userForm");
+		if (savedForm) {
+			console.log("Local storage data found", savedForm);
+
+			form.setValue("firstName", JSON.parse(savedForm).firstName);
+			form.setValue("lastName", JSON.parse(savedForm).lastName);
+		}
+	}, []);
+
+	// Save user form data to localStorage every 100 milliseconds after the form values change
+	React.useEffect(() => {
+		const timer = setTimeout(() => {
+			console.log("Saving user form data to localStorage", form.getValues());
+			localStorage.setItem("userForm", JSON.stringify(form.getValues()));
+		}, 300);
+
+		// Clear the timer when the component unmounts
+		return () => clearTimeout(timer);
+	}, [form.watch()]);
 
 	return (
 		<div className="UserForm">
-			<h1>Create A New User</h1>
+			<h2>Create A New User</h2>
+			<br />
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}

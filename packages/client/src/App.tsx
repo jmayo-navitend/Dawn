@@ -8,6 +8,7 @@ import UserTable from "@/components/tables/UserTable";
 function App() {
 	return (
 		<>
+			<h1>Dawn</h1>
 			<div className="flex flex-col gap-8">
 				<UserTable />
 				<UserForm />
