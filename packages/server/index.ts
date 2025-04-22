@@ -1,19 +1,56 @@
-import { PrismaClient } from './prisma/generated/client'
+import express, { Request, Response } from "express";
+import cors from "cors";
+import { PrismaClient } from "./prisma/generated/client";
 
-const prisma = new PrismaClient()
+const app = express();
+const prisma = new PrismaClient();
 
-async function main() {
-    // ... you will write your Prisma Client queries here
-    const allUsers = await prisma.user.findMany()
-    console.log(allUsers)
-  }
+const PORT = process.env.PORT || 8081;
 
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+app.use(express.json());
+app.use(cors());
+
+app.get("/api/users", async (req: Request, res: Response) => {
+	try {
+		const users = await prisma.user.findMany();
+		res.json(users);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+app.delete("/api/user/:id", async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const numericId = Number(id);
+
+	console.log("Deleting user with ID:", numericId);
+
+	try {
+		await prisma.user.delete({
+			where: { id: numericId },
+		});
+		res.json({ message: "User deleted successfully" });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+app.post("/api/user", async (req: Request, res: Response) => {
+	const { firstName, lastName } = req.body;
+
+	try {
+		const newUser = await prisma.user.create({
+			data: { firstName, lastName },
+		});
+		res.json(newUser);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+});
+
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
+});
