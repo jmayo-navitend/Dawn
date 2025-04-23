@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 import "./index.css";
 
-import { ThemeProvider } from "@/components/ThemeProvider.tsx";
+import { ThemeProvider } from "@/components/utilities/ThemeProvider.tsx";
 
 import App from "./App.tsx";
 

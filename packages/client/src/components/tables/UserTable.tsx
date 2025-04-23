@@ -15,9 +15,8 @@ export function UserTable() {
 		fetch("http://localhost:8081/api/users")
 			.then((response) => response.json())
 			.then((data) => setUsers(data))
+			.then(() => console.log("Users fetched"))
 			.catch((error) => console.error("Error fetching users:", error));
-
-		console.log("Users fetched");
 	}, []);
 
 	return (

@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // Packages
@@ -12,8 +12,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const userSchema = z.object({
-	firstName: z.string().min(1).max(50),
-	lastName: z.string().min(1).max(50),
+	firstName: z
+		.string()
+		.min(2 ** 0)
+		.max(2 ** 4),
+	lastName: z
+		.string()
+		.min(2 ** 0)
+		.max(2 ** 4),
 });
 
 export function UserForm() {
@@ -46,22 +52,35 @@ export function UserForm() {
 			});
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const savedForm = localStorage.getItem("userForm");
+
 		if (savedForm) {
 			console.log("Local storage data found", savedForm);
 
+			// For each form field, set its value to the corresponding value from localStorage
 			form.setValue("firstName", JSON.parse(savedForm).firstName);
 			form.setValue("lastName", JSON.parse(savedForm).lastName);
 		}
 	}, []);
 
 	// Save user form data to localStorage every 100 milliseconds after the form values change
-	React.useEffect(() => {
+	useEffect(() => {
 		const timer = setTimeout(() => {
-			console.log("Saving user form data to localStorage", form.getValues());
-			localStorage.setItem("userForm", JSON.stringify(form.getValues()));
-		}, 300);
+			// if every value in the form is "" then don't save it
+			if (Object.values(form.getValues()).every((value) => value == "")) {
+				// Remove the empty user form data from localStorage if it exists (this happens when the cancel button is clicked or the fields are empty)
+				if (localStorage.getItem("userForm")) {
+					console.log("Removing user form data from localStorage");
+					localStorage.removeItem("userForm");
+				}
+			} else {
+				console.log("Saving user form data to localStorage", form.getValues());
+
+				// Convert the form values to a JSON string and save it to localStorage
+				localStorage.setItem("userForm", JSON.stringify(form.getValues()));
+			}
+		}, 200);
 
 		// Clear the timer when the component unmounts
 		return () => clearTimeout(timer);
@@ -76,6 +95,7 @@ export function UserForm() {
 					onSubmit={form.handleSubmit(onSubmit)}
 					className="space-y-8"
 				>
+					{/* First Name */}
 					<FormField
 						control={form.control}
 						name="firstName"
@@ -93,6 +113,7 @@ export function UserForm() {
 						)}
 					/>
 
+					{/* Last Name */}
 					<FormField
 						control={form.control}
 						name="lastName"
@@ -109,9 +130,19 @@ export function UserForm() {
 							</FormItem>
 						)}
 					/>
+
+					{/* Submit */}
 					<Button type="submit">Submit</Button>
 				</form>
 			</Form>
+
+			{/* Cancel Button (clears form) */}
+			<Button
+				className="absolute translate-x-full -translate-y-full ml-10"
+				onClick={() => form.reset()}
+			>
+				Cancel
+			</Button>
 		</div>
 	);
 }
