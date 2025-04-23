@@ -11,6 +11,8 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/api/users", async (req: Request, res: Response) => {
+	console.log("Fetching all users...");
+
 	try {
 		const users = await prisma.user.findMany();
 		res.json(users);
@@ -39,6 +41,8 @@ app.delete("/api/user/:id", async (req: Request, res: Response) => {
 
 app.post("/api/user", async (req: Request, res: Response) => {
 	const { firstName, lastName } = req.body;
+
+	console.log("Creating new user with first name:", firstName, "and last name:", lastName);
 
 	try {
 		const newUser = await prisma.user.create({

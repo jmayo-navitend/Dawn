@@ -10,8 +10,8 @@ function App() {
 		<>
 			<h1>Dawn</h1>
 			<div className="flex flex-col gap-8">
-				<UserTable />
 				<UserForm />
+				<UserTable />
 			</div>
 		</>
 	);
