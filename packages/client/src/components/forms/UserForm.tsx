@@ -39,9 +39,6 @@ export function UserForm() {
 		// 3. Do something with the values
 		fetch("http://localhost:8081/api/user", {
 			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
 			body: JSON.stringify(values),
 		})
 			.then((response) => response.json())

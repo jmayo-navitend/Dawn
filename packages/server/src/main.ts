@@ -3,9 +3,7 @@ import cors from "cors";
 
 import routes from "./routes";
 
-type Express = express.Application;
-
-export default function create(app: Express): Express {
+export default function create(app: express.Application): express.Application {
 	app.use(express.json());
 	app.use(cors());
 
