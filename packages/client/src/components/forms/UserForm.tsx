@@ -87,9 +87,8 @@ export function UserForm() {
 	}, [form.watch()]);
 
 	return (
-		<div className="UserForm">
+		<div className="flex flex-col gap-4">
 			<h2>Create A New User</h2>
-			<br />
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
@@ -131,18 +130,22 @@ export function UserForm() {
 						)}
 					/>
 
-					{/* Submit */}
-					<Button type="submit">Submit</Button>
+					<div className="flex gap-8">
+						{/* Submit */}
+						<Button type="submit">Submit</Button>
+
+						{/* Cancel Button (clears form) */}
+						<Button
+							onClick={(e) => {
+								e.preventDefault();
+								form.reset();
+							}}
+						>
+							Cancel
+						</Button>
+					</div>
 				</form>
 			</Form>
-
-			{/* Cancel Button (clears form) */}
-			<Button
-				className="absolute translate-x-full -translate-y-full ml-10"
-				onClick={() => form.reset()}
-			>
-				Cancel
-			</Button>
 		</div>
 	);
 }

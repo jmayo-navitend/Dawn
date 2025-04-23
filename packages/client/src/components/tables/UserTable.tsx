@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // Shared
-import { User } from "../../../../shared/types";
+import { User } from "../../../../shared/types/data.types";
 
 // Components
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ export function UserTable() {
 	}, []);
 
 	return (
-		<div className="UserTable">
+		<div>
 			<h2>Users</h2>
 			<Table>
 				<TableHeader>

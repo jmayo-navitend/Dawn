@@ -16,8 +16,10 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@prisma/client": "^6.6.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "kysely": "^0.28.1",
+    "mysql2": "^3.14.0",
+    "prisma-kysely": "^1.8.0"
   }
 }
