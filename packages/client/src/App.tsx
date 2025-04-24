@@ -1,21 +1,21 @@
 // React
+import { RouterProvider } from "react-router";
+
+// App
 import "./App.css";
 
-// Custom Components
-import UserForm from "@/components/forms/UserForm";
-import UserSearch from "@/components/forms/UserSearch";
-import UserTable from "@/components/tables/UserTable";
+// Utilities
+import router from "@/routes";
+import { ThemeProvider } from "@/components/utilities/ThemeProvider.tsx";
 
 function App() {
 	return (
-		<>
-			<h1>Dawn</h1>
-			<div className="flex flex-col gap-16">
-				<UserForm />
-				<UserSearch />
-				<UserTable />
-			</div>
-		</>
+		<ThemeProvider
+			defaultTheme="system"
+			storageKey="ui-theme"
+		>
+			<RouterProvider router={router} />
+		</ThemeProvider>
 	);
 }
 

@@ -7,7 +7,7 @@ body {
 
 #root {
 	width: 80%;
-	margin: 0 auto;
+	margin: 24px auto;
 }
 
 h1 {
@@ -17,7 +17,7 @@ h1 {
 
 h2 {
 	@apply scroll-m-20 border-b pb-2 text-4xl font-semibold tracking-tight first:mt-0;
-	@apply leading-12 mb-2;
+	@apply leading-18 mb-2;
 }
 
 h3 {
@@ -27,7 +27,7 @@ h3 {
 
 h4 {
 	@apply scroll-m-20 text-xl font-semibold tracking-tight;
-	@apply leading-12;
+	@apply leading-16;
 }
 
 p {
