@@ -1,19 +1,16 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+// React
+import React from "react";
+import ReactDOM from "react-dom/client";
 
+// App
 import "./index.css";
-
-import { ThemeProvider } from "@/components/utilities/ThemeProvider.tsx";
-
 import App from "./App.tsx";
 
-createRoot(document.getElementById("root")!).render(
-	<ThemeProvider
-		defaultTheme="system"
-		storageKey="ui-theme"
-	>
-		<StrictMode>
-			<App />
-		</StrictMode>
-	</ThemeProvider>
+const root = document.getElementById("root");
+if (!root) throw new Error("No root element found");
+
+ReactDOM.createRoot(root).render(
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>
 );

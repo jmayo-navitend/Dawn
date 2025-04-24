@@ -34,18 +34,21 @@ export function UserForm() {
 
 	// 2. Define a submit handler
 	function onSubmit(values: z.infer<typeof userSchema>) {
-		console.log("Sending user:", values);
+		console.log("Sending user:", JSON.stringify(values));
 
 		// 3. Do something with the values
 		fetch("http://localhost:8081/api/user", {
 			method: "POST",
 			body: JSON.stringify(values),
+			headers: {
+				"Content-Type": "application/json",
+			},
 		})
 			.then((response) => response.json())
 			.then((data) => console.log("User created:", data))
 			.catch((error) => console.error("Error creating user:", error))
 			.then(() => {
-				form.reset();
+				// form.reset();
 			});
 	}
 

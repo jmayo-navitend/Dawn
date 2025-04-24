@@ -20,6 +20,8 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
 };
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
+	console.log("Creating user:", req.body);
+
 	try {
 		const user = await userService.createUser(req.body);
 		res.status(201).json(user);

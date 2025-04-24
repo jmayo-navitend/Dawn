@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // Shared
-import { User } from "../../../../shared/types/data.types";
+import { User } from "#/types/data.types";
 
 // Components
 import { Button } from "@/components/ui/button";
